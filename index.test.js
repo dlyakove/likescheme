@@ -1,6 +1,6 @@
 /* global expect */
-const index = require('./index');
-//import {parse, translate, compile, interpret, interpretJson} from './interpreter.js';
+const index = require('./index.cjs');
+//import {parse, compile, evaluate} from './index.mjs';
 
 // extend expect handler to customize the message
 expect.extend({

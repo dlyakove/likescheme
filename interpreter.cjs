@@ -78,13 +78,13 @@ const f = {
   }
 };
 
-const _evaluate = (j, data) => {
+const __evaluate = (j, data) => {
   const op = j.operator;
   const val = j.args.reduce((p, c) => {
     if (typeof c === 'object' &&
         !Array.isArray(c) &&
         c !== null) {
-      p.push(_evaluate(c, data));
+      p.push(__evaluate(c, data));
     } else {
       p.push(c);
     }
@@ -96,7 +96,7 @@ const _evaluate = (j, data) => {
   return f[op](val, data);
 };
 
-const parse = (code => {
+const _parse = (code => {
   return JSON.parse(code
     .replace(/'([^']+)'/g, (m) => m.replace(/ /g, '%%_%%'))
     .replace(/\[([a-zA-Z\$]+)/g, "['$1'")
@@ -106,21 +106,21 @@ const parse = (code => {
     );
 });
 
-const evaluate = (code, data, strict=true) => {
+const _evaluate = (code, data, strict=true) => {
   
   strictMode = strict; // if true, unknown variable throws error, else they are set to undefined
   
   if (typeof code === 'string') {
-    code = compile(code);
+    code = _compile(code);
   }
-  return _evaluate(code, data);
+  return __evaluate(code, data);
 };
 
-const _compile = (l, data) => {
+const __compile = (l, data) => {
   const op = l[0];
   const val = l.slice(1).reduce((p, c) => {
     if (Array.isArray(c)) {
-      p.push(_compile(c, data));
+      p.push(__compile(c, data));
     } else {
       p.push(c);
     }
@@ -132,12 +132,12 @@ const _compile = (l, data) => {
   return {operator: op, args: val};
 };
 
-const compile = (code) => {
-  return _compile(parse(code));
+const _compile = (code) => {
+  return __compile(_parse(code));
 };
 
 module.exports = {
-  evaluate,
-  compile,
-  parse
+  _evaluate,
+  _compile,
+  _parse
 };
