@@ -10,8 +10,7 @@ function add(a, b) {
 module.exports = {
   add,
   parse: interpreter.parse,
-  translate: interpreter.translate,
   compile: interpreter.compile,
-  interpretText: interpreter.interpret,
-  interpretJson: interpreter.interpretJson,
+  interpretText: interpreter.interpretText,
+  evaluate: interpreter.evaluate,
 };

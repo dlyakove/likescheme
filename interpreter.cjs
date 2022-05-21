@@ -1,26 +1,18 @@
 var strictMode = true;
 
 const g = (l, data) => {
-  //console.log(l)
-  //console.log(data)
   if(data === undefined) {
     return undefined;
   }
   if(data instanceof Array) {
-    //console.log(`${l} is Array`)
     var v = [];
     data.forEach((e, i) => {
-      //console.log('v', v, 'l', l, 'e', e, 'g', g(l, data[i]))
       v.push(g(l, e));
-      //v.push(g(l, data[i]));
     });
-    //console.log(v.join('-'))
-    return v; //v.join('-');
-    //return undefined;
+    return v;
   }
-  const p = l.split('.'); // biller.name -> ['biller', 'name']
+  const p = l.split('.');
   if (p.length > 1) {
-    //console.log(`p: ${p.slice(1)}, p[0]: ${p[0]}, data: ${data[p[0]]}`)
     return g(p.slice(1).join('.'), data[p[0]]);
   }
   return data[p[0]];
@@ -28,20 +20,19 @@ const g = (l, data) => {
 
 const isList = (v => {
   if (!(v instanceof Array)) {
-    throw 'not a list';
+    return false;
+    //throw 'not a list';
   }
   return true;
 });
 
 const f = {
   'var': (l, data) => {
-    const v = g(l[0], data); //data[l[0]];
-    //if(data[l[0]] === undefined) {
+    const v = g(l[0], data);
     if(v === undefined && strictMode) {
       throw `Unknown data attribute ${l[0]}`;
     }
     return v;
-    //return data[l[0]];
   },
   '$': (l, data) => f.var(l, data),
   //'val': (l) => l[0],
@@ -62,9 +53,7 @@ const f = {
   'in': (l) => Array.isArray(l[0]) ? l[0].some(v => l[1].includes(v)) : l[1].includes(l[0]),
   'vin': (l, data) => f.in([f.var(l, data), l[1]]),
   'bw': (l) => Array.isArray(l[0]) ? l[0].some(v => (l[1] <= v && v <= l[2])) : (l[1] <= l[0] && l[0] <= l[2]), // between, closed, "some", if list
-  //'or': (l) => l[0] || l[1],
   'or': (l) => l.some(v => v),
-  //'and': (l) => l[0] && l[1],
   'and': (l) => l.every(v => v),
   'not': (l) => !l[0],
   'isy': (l, data) => f.in([f.low([f.var(l, data)]), ['yes', 'y']]),
@@ -89,32 +78,13 @@ const f = {
   }
 };
 
-const evaluate = (l, data) => {
-  //console.log('evaluate', l, 'data', data);
-  const op = l[0];
-  const val = l.slice(1).reduce((p, c) => {
-    if (Array.isArray(c)) {
-      p.push(evaluate(c, data));
-    } else {
-      p.push(c);
-    }
-    return p;
-  }, []);
-  //console.log('return', f[op](val, data));
-  if(f[op] === undefined) {
-    throw `Unknown operation ${op}`;
-  }
-  return f[op](val, data);
-};
-
-const evaluateJson = (j, data) => {
+const _evaluate = (j, data) => {
   const op = j.operator;
   const val = j.args.reduce((p, c) => {
-    //if (Array.isArray(c)) {
     if (typeof c === 'object' &&
         !Array.isArray(c) &&
         c !== null) {
-      p.push(evaluateJson(c, data));
+      p.push(_evaluate(c, data));
     } else {
       p.push(c);
     }
@@ -136,51 +106,38 @@ const parse = (code => {
     );
 });
 
-const interpret = (code, data, strict=true) => {
+const evaluate = (code, data, strict=true) => {
   
-  strictMode = strict; // if true, unknown variables throw error, else they are set to undefined
+  strictMode = strict; // if true, unknown variable throws error, else they are set to undefined
   
-  return evaluate(parse(code), data);
+  if (typeof code === 'string') {
+    code = compile(code);
+  }
+  return _evaluate(code, data);
 };
 
-const interpretJson = (code, data, strict=true) => {
-  
-  strictMode = strict; // if true, unknown variables throw error, else they are set to undefined
-  
-  return evaluateJson(code, data);
-};
-
-const translate = (l, data) => {
-  //console.log('evaluate', l, 'data', data);
+const _compile = (l, data) => {
   const op = l[0];
   const val = l.slice(1).reduce((p, c) => {
     if (Array.isArray(c)) {
-      p.push(translate(c, data));
+      p.push(_compile(c, data));
     } else {
       p.push(c);
     }
     return p;
   }, []);
-  //console.log('return', f[op](val, data));
   if(f[op] === undefined) {
     throw `Unknown operation ${op}`;
   }
   return {operator: op, args: val};
-  //return f[op](val, data);
 };
 
 const compile = (code) => {
-  return translate(parse(code));
+  return _compile(parse(code));
 };
 
 module.exports = {
-  interpret,
-  interpretJson,
+  evaluate,
   compile,
-  parse,
-  translate
+  parse
 };
-//exports.interpretJson = interpretJson;
-//exports.compile = compile;
-//exports.parse = parse;
-//exports.translate = translate;
