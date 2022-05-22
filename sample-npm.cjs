@@ -1,5 +1,5 @@
-// how to 'require' locally installed likescheme in the CommonJS style module context
-const index = require('./index.cjs');
+// how to 'require' npm-nstalled likescheme in the CommonJS style module context
+const index = require('likescheme');
 
 // evaluating text-based code
 console.log(index.evaluate("[and [isy 'isRound'] [isy 'isRed']]", {isRound: 'y', isRed: 'n'}));

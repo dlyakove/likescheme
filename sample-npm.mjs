@@ -1,5 +1,5 @@
-// how to 'import' locally installed likescheme in the ECMAScript style module context
-import {evaluate} from './index.mjs';
+// how to 'import' npm-nstalled likescheme in the ECMAScript style module context
+import {evaluate} from 'likescheme';
 
 // evaluating text-based code
 console.log(evaluate("[and [isy 'isRound'] [isy 'isRed']]", {isRound: 'y', isRed: 'n'}));
