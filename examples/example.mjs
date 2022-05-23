@@ -1,6 +1,5 @@
-// how to 'require' locally installed likescheme in the CommonJS style module context
-const index = require('./index.cjs');
-const evaluate = index.evaluate;
+// how to 'import' locally installed likescheme in the ECMAScript style module context
+import {evaluate} from '../index.mjs';
 
 // evaluate text-based code
 // NOTE: each function is enclosed in square brackets and the operands are space delimited
