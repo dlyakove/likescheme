@@ -17,6 +17,7 @@ __likescheme__ lets you encode functional statements directly into the configura
 The following popular plain Javascript implementation of Lisp, Scheme or Lua could be considered an alternative.
 - [LIPS](https://lips.js.org/)
 - [Lua](https://www.npmjs.com/package/lua-interpreter)
+
 However, we decided to create __likescheme__ to limit functionality to conditional and aggregate operations only, which reduces complexity, the learning curve, and makes it safer. 
 
 ## Installation
@@ -29,11 +30,15 @@ npm i likescheme
 
 ### import
 
-```javascript
-// ECMAScript Module
-import {evaluate} from 'likescheme';
+#### ECMAScript Module
 
-// CommonJS Module
+```javascript
+import {evaluate} from 'likescheme';
+```
+
+#### CommonJS Module
+
+```javascript
 const likescheme = require('likescheme');
 const evaluate = likescheme.evaluate;
 ```
