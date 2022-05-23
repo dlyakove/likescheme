@@ -13,11 +13,11 @@ __likescheme__ lets you encode functional statements directly into the configura
 - workflow routing rules
 - data or ETL mapping logic
 
-### Why not Lisp or Scheme or Lua
-The following popular plain Javascript implementation of Lisp, Scheme or Lua could be considered as an alternative.
-We thought of rolling our own functional language to reduce the complexity, the learning curve, and to limit available functionality to the conditional and aggregate operations only.
+### Why not Lisp or Scheme or Lua?
+The following popular plain Javascript implementation of Lisp, Scheme or Lua could be considered an alternative.
 - [LIPS](https://lips.js.org/)
 - [Lua](https://www.npmjs.com/package/lua-interpreter)
+However, we decided to create __likescheme__ to limit functionality to conditional and aggregate operations only, which reduces complexity, the learning curve, and makes it safer. 
 
 ## Installation
 
