@@ -1,13 +1,14 @@
 [![NPM version][npm-image]][npm-url]
 
 ## Description
-likescheme is a plain Javascript implementation of the functional prefix-notation Scheme-like interpreted language.
+likescheme is a plain Javascript implementation of the functional prefix-notation Scheme-like interpreted language. It evaluates functional logic statements represented as a string or an object in a provided execution environment scope. 
 
-Evaluates functional logic represented as a string or an object in the scope of the provided execution environment. 
+### Use Case
 
-### Use Cases
+#### Move logic from code to configuration.
+__likescheme__ lets you encode functional statements directly into the configuration layer when coding it directly in Javascript is not feasible due to  complexity or security considerations.
 
-Use it with a user or a 3rd-party managed UI configuration or ETL mapping rules like the following and when letting the user or the 3rd party code the logic directly in Javascript is not feasible due to complexity or security considerations.
+##### Examples:
 - UI elements visibility logic
 - workflow routing rules
 - data mapping logic
