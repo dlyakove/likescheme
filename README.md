@@ -6,12 +6,12 @@ likescheme is a plain Javascript implementation of the functional prefix-notatio
 ### Use Case
 
 #### Move logic from code to configuration.
-__likescheme__ lets you encode functional statements directly into the configuration layer when coding it directly in Javascript is not feasible due to  complexity or security considerations.
+__likescheme__ lets you encode functional statements directly into the configuration layer of your app or service when coding it in Javascript is not feasible due to complexity or security considerations.
 
-##### Examples:
+#### Examples:
 - UI elements visibility logic
 - workflow routing rules
-- data mapping logic
+- data or ETL mapping logic
 
 ### Why not Lisp or Scheme or Lua
 The following popular plain Javascript implementation of Lisp, Scheme or Lua could be considered as an alternative.
