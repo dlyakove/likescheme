@@ -5,6 +5,19 @@ likescheme is a plain Javascript implementation of the functional prefix-notatio
 
 Use it to dynamically evaluate external functional logic passed to the program at the run time, e.g. via input or configuration parameters.
 
+### Use Cases
+
+User or 3rd-party managed UI or ETL configuration, which require some degree of conditional logic and where letting the user or the 3rd party to code the logic directly in Javascript is not feasible due to complexity or security considerations.
+- UI elements visibility logic
+- workflow routing rules
+- data mapping logic
+
+### Why not Lisp or Scheme or Lua
+The following popular plain Javascript implementation of Lisp, Scheme or Lua could be considered as an alternative.
+We thought of rolling our own functional language to reduce the complexity, the learning curve, and to limit available functionality to the conditional and aggregate operations only.
+- [LIPS](https://lips.js.org/)
+- [Lua](https://www.npmjs.com/package/lua-interpreter)
+
 ## Installation
 
 ```bash
@@ -25,6 +38,8 @@ const evaluate = likescheme.evaluate;
 ```
 
 ### evaluate
+
+Evaluates __code__ in the context of the provided __data__ object.
 
 ```javascript
 evaluate (
@@ -48,14 +63,52 @@ evaluate(
         }
     }
 );
+
+// returns
+true
 ```
 
 #### More Examples
 - See more examples [here](./examples)
 
+### parse
+
+Converts __code__ from __string__ to __Array__ (list) representation.
+
+```javascript
+parse(code)
+```
+### Examples
+
+```javascript
+import {parse} from 'likescheme';
+
+parse("[and [veq 'order.product' 'apple'] [vge 'order.quantity' 1]]");
+
+// returns
+['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity', 1]]
+```
+
+### compile
+
+Converts __code__ from __Array__ to __JSON__ representation.
+
+```javascript
+compile( ['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity', 1]]);
+
+// returns
+{
+  operator: 'and',
+  args: [
+    { operator: 'veq', args: [ 'order.product', 'apple' ] },
+    { operator: 'vge', args: [ 'order.quantity', 1 ] }
+  ]
+}
+```
+
 ## Functions
 - `get key`
-  - returns the value of the data object property referenced by `key`. Nested objects supported via 'dot' notation.
+  - returns the value of the data object property referenced by __key__. Nested objects supported via 'dot' notation.
       - `"[get 'product.name']"`
       - `['get', 'product.name']`
       - `{operator: 'get', args: ['product.name']}`
@@ -65,18 +118,18 @@ evaluate(
       - `['list', 'apple', 'banana', 'pear' ]`
       - `{operator: 'list', args: ['apple', 'banana', 'pear']}`
 - `in value list`
-  - returns `true` if the `value` is in the list provided in the second argument
+  - returns __true__ if the __value__ is in the list provided in the second argument
       - `"[in [get 'product.name'] [list 'apple' 'banana' 'pear']]"`
       - `['in', ['get', 'product.name'], ['list', 'apple', 'banana', 'pear']]`
       - `{operator: 'in', args: [{operator: 'get', args:['product.name']}, {operator: 'list', args: ['apple', 'banana', 'pear']}]}`
 - `eq|ne|lt|gt|le|ge value1 value2`
-  - returns `true` if `value1` is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to `value2`
+  - returns __true__ if __value1__ is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to __value2__
       - `"[eq [get 'product.name'] 'apple']"`
       - `['eq', ['get', 'product.name'], 'apple']`
       - `{operator: 'eq', args: [{operator: 'get', args: ['product.name']}, 'apple']}`
   - example: `{operator: 'eq', args: [{operator: 'get', args: ['product.name']}, 'apple']}`
 - `isy|isn|isu key`
-  - syntaxical sugar - returns `true` if the value of the data object property referenced by `key` is 'truthy', 'falsy' or unknown respectively
+  - syntaxical sugar - returns __true__ if the value of the data object property referenced by __key__ is 'truthy', 'falsy' or unknown respectively
       - `"[isy 'isTaxFree']"`
       - `['isy', 'isTaxFree']`
       - `{operator: 'isy', args: [ 'isTaxFree' ]}`
@@ -91,23 +144,23 @@ evaluate(
       - `['and', ['isy', 'isRound'], ['isy', 'isRed']]`
       - `{operator: 'and', args: [{operator: 'isy', args: [Array]}, {operator: 'isy', args: [Array]}]}`
 - `veq|vne|vlt|vgt|vle|vge key value`
-  - syntaxical sugar - returns `true` if the value of the data object property referenced by `key` is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to `value`
+  - syntaxical sugar - returns __true__ if the value of the data object property referenced by __key__ is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to __value__
       - `"[veq 'product.name' 'apple']"`
       - `['veq', 'product.name', 'apple']`
       - `{operator: 'veq', args: [ 'product.name', 'apple' ]}`
 - `vin key list`
-  - syntaxical sugar - returns `true` if the value of the data object propert referenced by `key` is in the list provided in the second argument
+  - syntaxical sugar - returns __true__ if the value of the data object propert referenced by __key__ is in the list provided in the second argument
       - `"[vin 'product.name' [list 'apple' 'banana' 'pear']]"`
       - `['vin', 'product.name', ['list', 'apple', 'banana', 'pear']]`
       - `{operator: 'vin', args: ['product.name', {operator: 'list', args: ['apple', 'banana', 'pear']}]}`
 - `bw value fromValue thruValue`
-    - returns `true` if `value` is between `fromValue` and `thruValue`, inclusive on both ends
+    - returns __true__ if __value__ is between __fromValue__ and __thruValue__, inclusive on both ends
       - `"[bw [get 'product.price'] 5.0 15.0]"`
 - `min|max list`
-    - returns min|max value in the `list`
+    - returns min|max value in the __list__
       - `"[min [list 1 10 11 101]]"`
 - `map value (key1, value1, ... keyX, valueX) defaultValue`
-    - returns `valueX`, which corresponds to the `keyX`, which is equal to `value` or `defaultValue` if such `keyX` does not exist
+    - returns __valueX__, which corresponds to the __keyX__, which is equal to __value__ or __defaultValue__ if such __keyX__ does not exist
     - `"[map [get 'product.name'] [list 'apple' 'fruit' 'banana' 'fruit' 'tomato' 'vegetable'] 'unknown']"`
         - returns `fruit` if `product.name` is `apple`
 - `join|split|uniq|usort|sum`
@@ -115,7 +168,7 @@ evaluate(
 
 ## TODO
 - [ ] proof-read README
-- [ ] minimize code
+- [ ] publish as webpack
 - [ ] scan against Javascript injection
 
 [npm-url]: https://www.npmjs.com/package/likescheme

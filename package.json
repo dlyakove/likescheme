@@ -14,6 +14,8 @@
   "keywords": [
     "scheme",
     "lisp",
+    "lips",
+    "lua",
     "interpreter",
     "evaluate",
     "functional",
@@ -28,7 +30,7 @@
     "test": "jest"
   },
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "likescheme": "^1.0.1"
   }
