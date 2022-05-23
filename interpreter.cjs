@@ -35,6 +35,7 @@ const f = {
     return v;
   },
   '$': (l, data) => f.var(l, data),
+  'get': (l, data) => f.var(l, data),
   //'val': (l) => l[0],
   'list': (l) => l,
   'low': (l) => l.map(v => v ? v.toLowerCase() : v),
@@ -106,11 +107,13 @@ const _parse = (code => {
     );
 });
 
-const _evaluate = (code, data, strict=true) => {
+const _evaluate = (code, data={}, strict=true) => {
   
   strictMode = strict; // if true, unknown variable throws error, else they are set to undefined
   
   if (typeof code === 'string') {
+    code = _compile(_parse(code));
+  } else if (Array.isArray(code)) {
     code = _compile(code);
   }
   return __evaluate(code, data);
@@ -133,7 +136,8 @@ const __compile = (l, data) => {
 };
 
 const _compile = (code) => {
-  return __compile(_parse(code));
+  return __compile(code);
+  //return __compile(_parse(code));
 };
 
 module.exports = {

@@ -13,7 +13,7 @@ npm i likescheme
 
 ## Usage
 
-### Import
+### import
 
 ```javascript
 // ECMAScript Module
@@ -28,35 +28,16 @@ const evaluate = likescheme.evaluate;
 
 ```javascript
 evaluate (
-    code, // string, e.g. [gt [var amount] 100.0] or JSON, e.g. {operator: 'gt', args: [{operator: 'var', args: ['amount']}, 100.0]}
-    data  // JSON, e.g. {amount: 150.0}
+    code, // string, e.g. [gt [get amount] 100.0]
+          // or Array, e.g. ['gt', ['get', 'amount']],
+          // or JSON, e.g. {operator: 'gt', args: [{operator: 'get', args: ['amount']}, 100.0]}
+    data, // object, JSON, optional, e.g. {price: 150.0}, nested objects and lists are supported (see examples)
+    strict // boolean, optional, default=true, if true, unknown variable throws error, else they are set to undefined
 )
 ```
 
 ### Examples:
-```javascript
-import {evaluate} from 'likescheme';
-
-// evaluate text-based code
-console.log(
-    evaluate(
-        "[and [isy 'isRound'] [isy 'isRed']]",
-        {isRound: 'y', isRed: 'n'}
-    );
-);
-
-// evaluating JSON-based code
-console.log(
-    evaluate(
-        {
-            operator: 'or', args: [
-                { operator: 'isy', args: ['isRound']},
-                { operator: 'isy', args: ['isRed']}
-            ]
-        },
-        { isRound: 'y', isRed: 'n'}
-    );
-);
-```
+[]
 
 [npm-url]: https://www.npmjs.com/package/likescheme
+[npm-image]: https://img.shields.io/npm/v/likescheme.svg

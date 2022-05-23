@@ -11,6 +11,14 @@
       "./index.cjs"
     ]
   },
+  "keywords": [
+    "scheme",
+    "lisp",
+    "interpreter",
+    "evaluate",
+    "functional",
+    "low code"
+  ],  
   "license": "MIT",
   "main": "index.cjs",
   "module": "index.mjs",
@@ -20,7 +28,7 @@
     "test": "jest"
   },
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
     "likescheme": "^1.0.1"
   }
