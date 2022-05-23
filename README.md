@@ -3,11 +3,11 @@
 ## Description
 likescheme is a plain Javascript implementation of the functional prefix-notation Scheme-like interpreted language.
 
-Use it to dynamically evaluate external functional logic passed to the program at the run time, e.g. via input or configuration parameters.
+Evaluates functional logic represented as a string or an object in the scope of the provided execution environment. 
 
 ### Use Cases
 
-User or 3rd-party managed UI or ETL configuration, which require some degree of conditional logic and where letting the user or the 3rd party to code the logic directly in Javascript is not feasible due to complexity or security considerations.
+Use it with the user or the 3rd-party managed UI configuration or ETL mapping rules when letting the user or the 3rd party to code the logic directly in Javascript is not feasible due to complexity or security considerations, e.g. for encoding:
 - UI elements visibility logic
 - workflow routing rules
 - data mapping logic
