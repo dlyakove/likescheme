@@ -7,7 +7,7 @@ Evaluates functional logic represented as a string or an object in the scope of 
 
 ### Use Cases
 
-Use it with the user or the 3rd-party managed UI configuration or ETL mapping rules when letting the user or the 3rd party to code the logic directly in Javascript is not feasible due to complexity or security considerations, e.g. for encoding:
+Use it with a user or a 3rd-party managed UI configuration or ETL mapping rules like the following and when letting the user or the 3rd party code the logic directly in Javascript is not feasible due to complexity or security considerations.
 - UI elements visibility logic
 - workflow routing rules
 - data mapping logic
