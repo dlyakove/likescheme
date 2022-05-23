@@ -51,34 +51,67 @@ evaluate(
 ```
 
 #### More Examples
-- [example.cjs](https://github.com/dlyakove/likescheme/blob/main/example.cjs)
-- [example.mjs](https://github.com/dlyakove/likescheme/blob/main/example.mjs)
-- [example-npm.cjs](https://github.com/dlyakove/likescheme/blob/main/example-npm.cjs)
-- [example-npm.mjs](https://github.com/dlyakove/likescheme/blob/main/example-npm.mjs)
+- See more examples [here](./examples)
 
 ## Functions
 - `get key`
   - returns the value of the data object property referenced by `key`. Nested objects supported via 'dot' notation.
-  - example: `{operator: 'get', args: ['product.name']}`
+      - `"[get 'product.name']"`
+      - `['get', 'product.name']`
+      - `{operator: 'get', args: ['product.name']}`
 - `list 'value1' ... `
   - returns the list (array) of values
-  - example: `{operator: 'list', args: ['apple', 'banana', 'pear']}`
+      - `"[list 'apple' 'banana' 'pear']"`
+      - `['list', 'apple', 'banana', 'pear' ]`
+      - `{operator: 'list', args: ['apple', 'banana', 'pear']}`
 - `in value list`
-  - returns True if the `value` is in the list provided in the second argument
-  - example: `{operator: 'in', args: [{operator: 'get', args:['product.name']}, {operator: list, args: ['apple', 'banana', 'pear']}]`
-- `eq|lt|gt|le|ge value1 value2`
-  - returns True if `value1` is equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to `value2`
+  - returns `true` if the `value` is in the list provided in the second argument
+      - `"[in [get 'product.name'] [list 'apple' 'banana' 'pear']]"`
+      - `['in', ['get', 'product.name'], ['list', 'apple', 'banana', 'pear']]`
+      - `{operator: 'in', args: [{operator: 'get', args:['product.name']}, {operator: 'list', args: ['apple', 'banana', 'pear']}]}`
+- `eq|ne|lt|gt|le|ge value1 value2`
+  - returns `true` if `value1` is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to `value2`
+      - `"[eq [get 'product.name'] 'apple']"`
+      - `['eq', ['get', 'product.name'], 'apple']`
+      - `{operator: 'eq', args: [{operator: 'get', args: ['product.name']}, 'apple']}`
   - example: `{operator: 'eq', args: [{operator: 'get', args: ['product.name']}, 'apple']}`
 - `isy|isn|isu key`
-  - syntaxical sugar - returns True if the value of the data object property referenced by `key` is 'truthy', 'falsy' or unknown respectively
-  - example: `{operator: 'isy', args: ['isAdult']}`:
-    - returns True if the case-insensitive answer to the question with the key `isAdult` is one of: 'true', '1', 'yes', 'y'
+  - syntaxical sugar - returns `true` if the value of the data object property referenced by `key` is 'truthy', 'falsy' or unknown respectively
+      - `"[isy 'isTaxFree']"`
+      - `['isy', 'isTaxFree']`
+      - `{operator: 'isy', args: [ 'isTaxFree' ]}`
 - `not value`
   - returns the boolean 'not' of its argument
-  - example: `{operator: 'not', args: [{operator: 'in', {operator: 'get', args: ['product.name']}, {operator: list, args: ['apple', 'banana', 'pear']}]}`
+      - `"[not [in [get 'product.name'] [list 'apple' 'banana' 'pear']]]"`
+      - `['not', ['in', ['get', 'product.name'], ['list', 'apple', 'banana', 'pear']]]`
+      - `{operator: 'not', args: [{operator: 'in', args: [{operator: 'get', args: ['product.name']}, {operator: 'list', args: ['apple', 'banana', 'pear']}]}]}`
 - `and|or value1, ...`
   - returns the boolean 'and|or' of its arguments
-  - example: `{operator: 'and', args: [{operator: 'isy', args: ['isInsured']}, {operator: 'isy', args: ['hasEob']}}`
+      - `"[and [isy 'isRound'] [isy 'isRed']]"`
+      - `['and', ['isy', 'isRound'], ['isy', 'isRed']]`
+      - `{operator: 'and', args: [{operator: 'isy', args: [Array]}, {operator: 'isy', args: [Array]}]}`
+- `veq|vne|vlt|vgt|vle|vge key value`
+  - syntaxical sugar - returns `true` if the value of the data object property referenced by `key` is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to `value`
+      - `"[veq 'product.name' 'apple']"`
+      - `['veq', 'product.name', 'apple']`
+      - `{operator: 'veq', args: [ 'product.name', 'apple' ]}`
+- `vin key list`
+  - syntaxical sugar - returns `true` if the value of the data object propert referenced by `key` is in the list provided in the second argument
+      - `"[vin 'product.name' [list 'apple' 'banana' 'pear']]"`
+      - `['vin', 'product.name', ['list', 'apple', 'banana', 'pear']]`
+      - `{operator: 'vin', args: ['product.name', {operator: 'list', args: ['apple', 'banana', 'pear']}]}`
+- `bw value fromValue thruValue`
+    - returns `true` if `value` is between `fromValue` and `thruValue`, inclusive on both ends
+      - `"[bw [get 'product.price'] 5.0 15.0]"`
+- `min|max list`
+    - returns min|max value in the `list`
+      - `"[min [list 1 10 11 101]]"`
+- `map value (key1, value1, ... keyX, valueX) defaultValue`
+    - returns `valueX`, which corresponds to the `keyX`, which is equal to `value` or `defaultValue` if such `keyX` does not exist
+    - `"[map [get 'product.name'] [list 'apple' 'fruit' 'banana' 'fruit' 'tomato' 'vegetable'] 'unknown']"`
+        - returns `fruit` if `product.name` is `apple`
+- `join|split|uniq|usort|sum`
+    - for these and other functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
 
 ## TODO
 - [ ] proof-read README

@@ -28,7 +28,7 @@
     "test": "jest"
   },
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "likescheme": "^1.0.1"
   }
