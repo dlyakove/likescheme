@@ -37,7 +37,7 @@ evaluate (
 ```
 
 ### Examples:
-[[Examples]]([url](https://github.com/dlyakove/likescheme/blob/main/example.cjs))
+[Examples]([url](https://github.com/dlyakove/likescheme/blob/main/example.cjs))
 
 [npm-url]: https://www.npmjs.com/package/likescheme
 [npm-image]: https://img.shields.io/npm/v/likescheme.svg
