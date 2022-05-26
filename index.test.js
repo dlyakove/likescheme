@@ -1,5 +1,7 @@
 /* global expect */
-const index = require('./index.cjs');
+const index = require('./dist/index.js');
+//import pkg from './src/index.js';
+//const {evaluate, parse, compile} = pkg;
 
 // extend expect handler to customize the message
 expect.extend({

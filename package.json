@@ -1,25 +1,13 @@
 {
   "author": "Daniel Lyakovetsky <dlyakove@knowser.com>",
   "description": "likescheme is a plain Javascript implementation of the functional prefix-notation Scheme-like interpreted language",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": [
-      {
-        "import": "./index.mjs",
-        "require": "./index.cjs"
-      },
-      "./index.cjs"
-    ]
-  },
+  "exports": "./dist/index.js",
   "files": [
-    "index.cjs",
-    "index.mjs",
-    "interpreter.cjs",
     "examples/*.?js",
-    "build",
+    "dist/*",
     "LICENSE",
     "README.md"
-  ],  
+  ],
   "keywords": [
     "scheme",
     "lisp",
@@ -29,18 +17,17 @@
     "evaluate",
     "functional",
     "low code"
-  ],  
+  ],
   "license": "MIT",
-  "main": "index.cjs",
-  "module": "index.mjs",
+  "main": "dist/index.js",
   "name": "likescheme",
   "repository": "git@github.com:dlyakove/likescheme.git",
   "scripts": {
+    "build": "webpack --mode production",
     "test": "jest"
   },
-  "type": "module",
-  "version": "1.0.5",
-  "dependencies": {
-    "likescheme": "^1.0.1"
+  "version": "1.0.6",
+  "devDependencies": {
+    "babel-loader": "^8.2.5"
   }
 }

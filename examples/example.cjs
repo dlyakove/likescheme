@@ -1,6 +1,17 @@
 // how to 'require' locally installed likescheme in the CommonJS style module context
-const index = require('../index.cjs');
+const index = require('../dist/index.js');
 const evaluate = index.evaluate;
+const compile = index.compile;
+const parse = index.parse;
+
+// compile text-based code into JSON
+console.log(
+    compile(
+        parse(
+            "[and [isy 'isRound'] [isy 'isRed']]",
+        )
+    )
+);
 
 // evaluate text-based code
 // NOTE: each function is enclosed in square brackets and the operands are space delimited

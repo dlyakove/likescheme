@@ -1,5 +1,15 @@
 // how to 'import' npm-nstalled likescheme in the ECMAScript style module context
-import {evaluate} from 'likescheme';
+import pkg from 'likescheme';
+const {evaluate, parse, compile} = pkg;
+
+// compile text-based code into JSON
+console.log(
+    compile(
+        parse(
+            "[and [isy 'isRound'] [isy 'isRed']]",
+        )
+    )
+);
 
 // evaluate text-based code
 // NOTE: each function is enclosed in square brackets and the operands are space delimited

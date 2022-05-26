@@ -1,6 +1,17 @@
 // how to 'require' npm-nstalled likescheme in the CommonJS style module context
 const likescheme = require('likescheme');
 const evaluate = likescheme.evaluate;
+const compile = likescheme.compile;
+const parse = likescheme.parse;
+
+// compile text-based code into JSON
+console.log(
+    compile(
+        parse(
+            "[and [isy 'isRound'] [isy 'isRed']]",
+        )
+    )
+);
 
 // evaluate text-based code
 // NOTE: each function is enclosed in square brackets and the operands are space delimited

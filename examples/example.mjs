@@ -1,6 +1,15 @@
 // how to 'import' locally installed likescheme in the ECMAScript style module context
-import {evaluate} from '../index.mjs';
+import pkg from '../dist/index.js';
+const {evaluate, parse, compile} = pkg;
 
+// compile text-based code into JSON
+console.log(
+    compile(
+        parse(
+            "[and [isy 'isRound'] [isy 'isRed']]",
+        )
+    )
+);
 // evaluate text-based code
 // NOTE: each function is enclosed in square brackets and the operands are space delimited
 console.log(
