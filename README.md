@@ -43,7 +43,7 @@ const likescheme = require('likescheme');
 const evaluate = likescheme.evaluate;
 ```
 
-### In-browser Use
+#### In-browser Use
 
 ```html
   ...
