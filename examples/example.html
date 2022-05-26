@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script src="../dist/index.browser.js"></script>
+  </head>
+  <body>
+    <h1>Likescheme In-browser Example</h1>
+    <table id='t1' border=1>
+      <th>Code</th>
+      <th>Data</th>
+      <th>Expected</th>
+      <th>Actual</th>
+    </table>
+    <script>
+      /* global likescheme */
+      const myTable = document.getElementById('t1');
+      [
+        {
+          code: "[eq '1' '1']",
+          data: {},
+          result: true
+        },
+        {
+          code: "[and [isy 'isRound'] [isy 'isRed']]",
+          data: {isRound: 'y', isRed: 'n'},
+          result: false
+        },
+        {
+          code: "[get 'product.price']",
+          data: {product: {price: 150.0}},
+          result: 150.0
+        },
+        {
+          code: "[sum [get 'order.items.amount']]",
+          data: {order: {items: [{amount: 100.0}, {amount: 200.0}, {amount: 300.0}]}},
+          result: 600.0
+        },
+      ].forEach((o) => {
+        console.log(o);
+        const tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.innerHTML = o.code;
+        tr.appendChild(td);
+        td = document.createElement('td');
+        td.innerHTML = JSON.stringify(o.data, null, 0);
+        tr.appendChild(td);
+        td = document.createElement('td');
+        td.innerHTML = o.result;
+        tr.appendChild(td);
+        myTable.appendChild(tr);
+        td = document.createElement('td');
+        td.innerHTML = likescheme.evaluate(o.code, o.data);
+        tr.appendChild(td);
+        myTable.appendChild(tr);
+      });
+    </script>    
+  </body>
+</html>
