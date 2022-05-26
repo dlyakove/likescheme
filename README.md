@@ -43,6 +43,27 @@ const likescheme = require('likescheme');
 const evaluate = likescheme.evaluate;
 ```
 
+### In-browser Use
+
+```html
+  ...
+  <head>
+    ...
+    <script src="https://unpkg.com/likescheme/dist/index.browser.js"></script>
+    ...
+  </head>
+  <body>
+    ...
+    <script>
+      /* global likescheme */
+      ...
+      likescheme.evaluate("[eq '1', '1");
+      ...
+    </script>
+  </body>
+  ...
+```
+
 ### evaluate
 
 Evaluates __code__ in the context of the provided __data__ object.
@@ -171,11 +192,6 @@ compile( ['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity',
         - returns `fruit` if `product.name` is `apple`
 - `join|split|uniq|usort|sum`
     - for these and other functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
-
-## TODO
-- [ ] proof-read README
-- [ ] publish as webpack
-- [ ] scan against Javascript injection
 
 [npm-url]: https://www.npmjs.com/package/likescheme
 [npm-image]: https://img.shields.io/npm/v/likescheme.svg
