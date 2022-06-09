@@ -34,6 +34,11 @@
           data: {order: {items: [{amount: 100.0}, {amount: 200.0}, {amount: 300.0}]}},
           result: 600.0
         },
+        {
+          code: "[rem [get 'order.amount'] 5]",
+          data: {order: {amount: 82.0}},
+          result: 2.0
+        }        
       ].forEach((o) => {
         console.log(o);
         const tr = document.createElement('tr');
