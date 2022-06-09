@@ -190,7 +190,7 @@ compile( ['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity',
     - returns __valueX__, which corresponds to the __keyX__, which is equal to __value__ or __defaultValue__ if such __keyX__ does not exist
     - `"[map [get 'product.name'] [list 'apple' 'fruit' 'banana' 'fruit' 'tomato' 'vegetable'] 'unknown']"`
         - returns `fruit` if `product.name` is `apple`
-- `join|split|uniq|usort|sum`
+- `join|split|uniq|usort|sum|mult|div|neg|rem|sub`
     - for these and other functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
 
 [npm-url]: https://www.npmjs.com/package/likescheme
