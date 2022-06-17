@@ -43,7 +43,12 @@
           code: "[rem [get 'order.amount'] 5]",
           data: {order: {amount: 82.0}},
           result: 2.0
-        }
+        },
+        {
+          code: "[vdays 'fromDate' 'endDate']",
+          data: {fromDate: '2022-06-01', endDate: '2022-06-17'},
+          result: 16
+        }        
       ].forEach((o) => {
         console.log(o);
         const tr = document.createElement('tr');

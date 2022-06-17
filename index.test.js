@@ -1,5 +1,13 @@
 /* global expect */
 const index = require('./dist/index.js');
+/*
+const interpreter = require('./src/interpreter.js'); // use only for testing
+const index = {
+  parse: interpreter._parse,
+  compile: interpreter._compile,
+  evaluate: interpreter._evaluate,
+};
+*/
 
 // extend expect handler to customize the message
 expect.extend({
@@ -83,6 +91,18 @@ const scenarios = [
       {name: 324, args: {code: "[rem [get 'order.amount'] 5]", data: {order: {amount: 82.0}}}, expected: 2.0},
       {name: 326, args: {code: "[sub [get 'order.amount'] [get 'order.tax']]", data: {order: {amount: 82.5, tax: 2.5}}}, expected: 80.0},
       {name: 328, args: {code: "[div [get 'order.amount'] [get 'order.items']]", data: {order: {amount: 80.0, items: 4.0}}}, expected: 20.0},
+      {name: 330, args: {code: "[days [get 'fromDate'] [get 'endDate']]", data: {fromDate: '2022-06-17', endDate: '2022-06-17'}}, expected: 0},
+      {name: 331, args: {code: "[days '2022-06-01' '2022-06-17']", data: {}}, expected: 16},
+      {name: 332, args: {code: "[days [get 'fromDate'] [get 'endDate']]", data: {fromDate: '2022-06-01', endDate: '2022-06-17'}}, expected: 16},
+      {name: 334, args: {code: "[days [get 'fromDate'] [get 'endDate']]", data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
+      {name: 336, args: {code: "[days [get 'fromDate'] [get 'endDate']]", data: {fromDate: '', endDate: ''}}, expected: undefined},
+      {name: 338, args: {code: "[days [get 'fromDate'] [get 'endDate']]", data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
+      {name: 340, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: '2022-06-17', endDate: '2022-06-17'}}, expected: 0},
+      {name: 342, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: '2022-06-01', endDate: '2022-06-17'}}, expected: 16},
+      {name: 344, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
+      {name: 346, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: '', endDate: ''}}, expected: undefined},
+      {name: 348, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
+      {name: 350, args: {code: "[days [today] [today]]", data: {}}, expected: 0},
     ]
   },  
   {
@@ -121,6 +141,18 @@ const scenarios = [
       {name: 324, args: {code: ['rem', ['get', 'order.amount'], 5], data: {order: {amount: 82.0}}}, expected: 2.0},
       {name: 326, args: {code: ['sub', ['get', 'order.amount'], ['get', 'order.tax']], data: {order: {amount: 82.5, tax: 2.5}}}, expected: 80.0},
       {name: 328, args: {code: ['div', ['get', 'order.amount'], ['get', 'order.items']], data: {order: {amount: 80.0, items: 4.0}}}, expected: 20.0},      
+      {name: 330, args: {code: ['days', ['get', 'fromDate'], ['get', 'endDate']], data: {fromDate: '2022-06-17', endDate: '2022-06-17'}}, expected: 0},
+      {name: 331, args: {code: ['days', '2022-06-01', '2022-06-17'], data: {}}, expected: 16},
+      {name: 332, args: {code: ['days', ['get', 'fromDate'], ['get', 'endDate']], data: {fromDate: '2022-06-01', endDate: '2022-06-17'}}, expected: 16},
+      {name: 334, args: {code: ['days', ['get', 'fromDate'], ['get', 'endDate']], data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
+      {name: 336, args: {code: ['days', ['get', 'fromDate'], ['get', 'endDate']], data: {fromDate: '', endDate: ''}}, expected: undefined},
+      {name: 338, args: {code: ['days', ['get', 'fromDate'], ['get', 'endDate']], data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
+      {name: 340, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: '2022-06-17', endDate: '2022-06-17'}}, expected: 0},
+      {name: 342, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: '2022-06-01', endDate: '2022-06-17'}}, expected: 16},
+      {name: 344, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
+      {name: 346, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: '', endDate: ''}}, expected: undefined},
+      {name: 348, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
+      {name: 350, args: {code: ['days', ['today'], ['today']], data: {}}, expected: 0},
     ]
   },   
   {
@@ -159,7 +191,18 @@ const scenarios = [
       {name: 324, args: { code: { operator: "rem", args: [{operator: "get", args:["order.amount"]},5]}, data: {order: {amount: 82.0}}}, expected: 2.0},
       {name: 326, args: { code: { operator: "sub", args: [{operator: "get", args:["order.amount"]},{"operator":"get","args":["order.tax"]}]}, data: {order: {amount: 82.5, tax: 2.5}}}, expected: 80.0},
       {name: 328, args: { code: { operator: "div", args: [{operator: "get", args:["order.amount"]},{"operator":"get","args":["order.items"]}]}, data: {order: {amount: 80.0, items: 4.0}}}, expected: 20.0},      
-      
+      {name: 330, args: {code: {operator: 'days',args: [{operator: 'get',args: ['fromDate']},{operator: 'get',args: ['endDate']}]}, data: {fromDate: '2022-06-17', endDate: '2022-06-17'}}, expected: 0},
+      {name: 331, args: {code: {operator: 'days',args: ['2022-06-01', '2022-06-17']}, data: {}}, expected: 16},
+      {name: 332, args: {code: {operator: 'days',args: [{operator: 'get',args: ['fromDate']},{operator: 'get',args: ['endDate']}]}, data: {fromDate: '2022-06-01', endDate: '2022-06-17'}}, expected: 16},
+      {name: 334, args: {code: {operator: 'days',args: [{operator: 'get',args: ['fromDate']},{operator: 'get',args: ['endDate']}]}, data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
+      {name: 336, args: {code: {operator: 'days',args: [{operator: 'get',args: ['fromDate']},{operator: 'get',args: ['endDate']}]}, data: {fromDate: '', endDate: ''}}, expected: undefined},
+      {name: 338, args: {code: {operator: 'days',args: [{operator: 'get',args: ['fromDate']},{operator: 'get',args: ['endDate']}]}, data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
+      {name: 340, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: '2022-06-17', endDate: '2022-06-17'}}, expected: 0},
+      {name: 342, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: '2022-06-01', endDate: '2022-06-17'}}, expected: 16},
+      {name: 344, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
+      {name: 346, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: '', endDate: ''}}, expected: undefined},
+      {name: 348, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
+      {name: 350, args: {code: {operator: 'days',args:[{operator: 'today', args: []}, {operator: 'today', args: []}]}, data: {}}, expected: 0}
     ]
   },  
 ];

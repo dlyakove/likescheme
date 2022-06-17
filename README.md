@@ -190,6 +190,23 @@ compile( ['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity',
     - returns __valueX__, which corresponds to the __keyX__, which is equal to __value__ or __defaultValue__ if such __keyX__ does not exist
     - `"[map [get 'product.name'] [list 'apple' 'fruit' 'banana' 'fruit' 'tomato' 'vegetable'] 'unknown']"`
         - returns `fruit` if `product.name` is `apple`
+- `days value1 value2`
+    - returns the number of days between the two dates represented by __value1__ (from date) and __value2__ (thru date), exclusive of thru date
+    - the date value is expected to be a string parseable by Javascript `Date.parse()`
+    - if the date value cannot be parsed, the function returns `NaN`
+    - `"[days '2022-06-01' '2022-06-17']"`
+        - returns `16` 
+    - `code: "[days [get 'fromDate'] [get 'endDate']]", data: {fromDate: '2022-06-17', endDate: '2022-06-01'}`
+        - returns `-16` 
+- `vdays key1 key2`
+    - syntaxical sugar for `days`
+    - returns the number of days between the two dates contained in the objects referenced by __key1__ and __key2__
+    - `code: "[vdays 'fromDate' 'endDate']", data: {fromDate: '2022-06-01', endDate: '2022-06-17'}`
+        - returns `16` 
+- `today`
+    - returns today's date in YYYY-MM-DD format
+    - `"[days [today] [today]]"`
+      - return `0`
 - `join|split|uniq|usort|sum|mult|div|neg|rem|sub`
     - for these and other functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
 
