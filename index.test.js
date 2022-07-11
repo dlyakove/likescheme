@@ -103,6 +103,11 @@ const scenarios = [
       {name: 346, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: '', endDate: ''}}, expected: undefined},
       {name: 348, args: {code: "[vdays 'fromDate' 'endDate']", data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
       {name: 350, args: {code: "[days [today] [today]]", data: {}}, expected: 0},
+      {name: 360, args: {code: "[eq [get 'unknownVariable'] [undefined]]", data: {}, strict: false}, expected: true},
+      {name: 370, args: {code: "[eq [get 'nullVar'] [null]]", data: {nullVar: null}, strict: false}, expected: true},
+      {name: 380, args: {code: "[eq [get 'trueVar'] [true]]", data: {trueVar: true}, strict: false}, expected: true},
+      {name: 390, args: {code: "[eq [get 'falseVar'] [false]]", data: {falseVar: false}, strict: false}, expected: true},
+      {name: 400, args: {code: "[isundefined 'unknownVariable']", data: {}}, expected: true},
     ]
   },  
   {
@@ -153,6 +158,11 @@ const scenarios = [
       {name: 346, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: '', endDate: ''}}, expected: undefined},
       {name: 348, args: {code: ['vdays', 'fromDate', 'endDate'], data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
       {name: 350, args: {code: ['days', ['today'], ['today']], data: {}}, expected: 0},
+      {name: 360, args: {code: ['eq', ['get', 'unknownVariable'], ['undefined']], data: {}, strict: false}, expected: true},
+      {name: 370, args: {code: ['eq', ['get', 'nullVar'], ['null']], data: {nullVar: null}, strict: false}, expected: true},
+      {name: 380, args: {code: ['eq', ['get', 'trueVar'], ['true']], data: {trueVar: true}, strict: false}, expected: true},
+      {name: 390, args: {code: ['eq', ['get', 'falseVar'], ['false']], data: {falseVar: false}, strict: false}, expected: true},
+      {name: 400, args: {code: ['isundefined', 'unknownVariable'], data: {}}, expected: true},
     ]
   },   
   {
@@ -202,7 +212,12 @@ const scenarios = [
       {name: 344, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: '2022-06-17', endDate: '2022-06-01'}}, expected: -16},
       {name: 346, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: '', endDate: ''}}, expected: undefined},
       {name: 348, args: {code: {operator: 'vdays',args: ['fromDate','endDate']}, data: {fromDate: 'not-a-date', endDate: 'not-a-date'}}, expected: NaN},
-      {name: 350, args: {code: {operator: 'days',args:[{operator: 'today', args: []}, {operator: 'today', args: []}]}, data: {}}, expected: 0}
+      {name: 350, args: {code: {operator: 'days',args:[{operator: 'today', args: []}, {operator: 'today', args: []}]}, data: {}}, expected: 0},
+      {name: 360, args: {code: {operator: 'eq', args:[{operator:'get', args:['unknownVariable']}, {operator: 'undefined', args:[]}]}, data: {}, strict: false}, expected: true},
+      {name: 370, args: {code: {operator: 'eq',args: [{operator: 'get',args: ['nullVar']},{operator: 'null',args: []}]}, data: {nullVar: null}, strict: false}, expected: true},
+      {name: 380, args: {code: {operator: 'eq',args: [{operator: 'get',args: ['trueVar']},{operator: 'true',args: []}]}, data: {trueVar: true}, strict: false}, expected: true},
+      {name: 390, args: {code: {operator: 'eq',args: [{operator: 'get',args: ['falseVar']},{operator: 'false',args: []}]}, data: {falseVar: false}, strict: false}, expected: true},
+      {name: 400, args: {code: {operator: 'isundefined',args: ['unknownVariable']}, data: {}}, expected: true},
     ]
   },  
 ];

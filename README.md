@@ -170,6 +170,11 @@ compile( ['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity',
       - `"[and [isy 'isRound'] [isy 'isRed']]"`
       - `['and', ['isy', 'isRound'], ['isy', 'isRed']]`
       - `{operator: 'and', args: [{operator: 'isy', args: [Array]}, {operator: 'isy', args: [Array]}]}`
+- `undefined|null|true|false`
+  - takes no arguments, returns __undefined__, __null__, __true__, and __false__ respectively
+- `isundefined key`
+  - returns __true__ if the data object does not contain the property referenced by __key__; this function is not affected by the __strict__ argument value.
+  - note: to test for the actual undefined value of an existing data object property, use `[eq [get 'myVar'] [undefined]]` 
 - `veq|vne|vlt|vgt|vle|vge key value`
   - syntaxical sugar - returns __true__ if the value of the data object property referenced by __key__ is equal|not-equal|less-then|greater-then|less-or-equal-then|greater-or-equal-then to __value__
       - `"[veq 'product.name' 'apple']"`
