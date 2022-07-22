@@ -67,6 +67,8 @@ const scenarios = [
       {name: 210, args: {code: "[veq 'product' 'apple']", data: {product: 'apple'}}, expected: true},
       {name: 212, args: {code: "[veq 'product.name' 'apple']", data: {product: {name: 'apple'}}}, expected: true},
       {name: 220, args: {code: "[isy 'isRound']", data: {isRound: 'y'}}, expected: true},
+      {name: 222, args: {code: "[isy 'isRound']", data: {isRound: true}}, expected: true},
+      {name: 224, args: {code: "[isy 'isRound']", data: {isRound: false}}, expected: false},
       {name: 230, args: {code: "[and [isy 'isRound'] [isy 'isRed']]", data: {isRound: 'y', isRed: 'n'}}, expected: false},
       {name: 232, args: {code: "[or [isy 'isRound'] [isy 'isRed']]", data: {isRound: 'y', isRed: 'n'}}, expected: true},
       {name: 240, args: {code: "[vin 'product.category' [list 'fruit' 'vegetable' 'grain']]", data: {product: {category: 'fruit'}}}, expected: true},
