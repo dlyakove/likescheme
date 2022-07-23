@@ -2,6 +2,7 @@
 
 ## Description
 likescheme is a plain Javascript implementation of the functional prefix-notation Scheme-like interpreted language. It evaluates functional logic statements represented as a string or an object in a provided execution environment scope. 
+Syntaxically, likescheme is somewhat similar to Tcl language.
 
 ### Use Case
 
@@ -212,8 +213,10 @@ compile( ['and', [ 'veq', 'order.product', 'apple' ], [ 'vge', 'order.quantity',
     - returns today's date in YYYY-MM-DD format
     - `"[days [today] [today]]"`
       - return `0`
-- `join|split|uniq|usort|sum|mult|div|neg|rem|sub`
-    - for these and other functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
+- `join|split|uniq|usort|lindex|lrange`
+    - for these list functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
+- `sum|mult|div|neg|rem|sub`
+    - for these aggregate functions see [Examples](./examples) and [the actual code](./interpreter.cjs)
 
 [npm-url]: https://www.npmjs.com/package/likescheme
 [npm-image]: https://img.shields.io/npm/v/likescheme.svg

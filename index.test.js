@@ -110,6 +110,11 @@ const scenarios = [
       {name: 380, args: {code: "[eq [get 'trueVar'] [true]]", data: {trueVar: true}, strict: false}, expected: true},
       {name: 390, args: {code: "[eq [get 'falseVar'] [false]]", data: {falseVar: false}, strict: false}, expected: true},
       {name: 400, args: {code: "[isundefined 'unknownVariable']", data: {}}, expected: true},
+      {name: 402, args: {code: "[isundefined [get 'myvar']]", data: {myvar: undefined}, strict: false}, expected: true},
+      {name: 500, args: {code: "[lindex [get 'fruits'] 1]", data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: 'banana'},
+      {name: 502, args: {code: "[lindex [get 'fruits']]", data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: undefined},
+      {name: 504, args: {code: "[lrange [get 'fruits'] 0]", data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: ['apple', 'banana', 'kiwi']},
+      {name: 504, args: {code: "[lrange [get 'fruits'] 1 4]", data: {fruits: ['apple', 'banana', 'kiwi', 'orange', 'melon']}}, expected: ['banana', 'kiwi', 'orange']},
     ]
   },  
   {
@@ -165,6 +170,11 @@ const scenarios = [
       {name: 380, args: {code: ['eq', ['get', 'trueVar'], ['true']], data: {trueVar: true}, strict: false}, expected: true},
       {name: 390, args: {code: ['eq', ['get', 'falseVar'], ['false']], data: {falseVar: false}, strict: false}, expected: true},
       {name: 400, args: {code: ['isundefined', 'unknownVariable'], data: {}}, expected: true},
+      {name: 402, args: {code: ['isundefined', ['get', 'myvar']], data: {myvar: undefined}, strict: false}, expected: true},
+      {name: 500, args: {code: ['lindex', ['get', 'fruits'], 1], data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: 'banana'},
+      {name: 502, args: {code: ['lindex', ['get', 'fruits']], data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: undefined},
+      {name: 504, args: {code: ['lrange', ['get', 'fruits'], 0], data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: ['apple', 'banana', 'kiwi']},
+      {name: 504, args: {code: ['lrange', ['get', 'fruits'], 1, 4], data: {fruits: ['apple', 'banana', 'kiwi', 'orange', 'melon']}}, expected: ['banana', 'kiwi', 'orange']},
     ]
   },   
   {
@@ -220,6 +230,11 @@ const scenarios = [
       {name: 380, args: {code: {operator: 'eq',args: [{operator: 'get',args: ['trueVar']},{operator: 'true',args: []}]}, data: {trueVar: true}, strict: false}, expected: true},
       {name: 390, args: {code: {operator: 'eq',args: [{operator: 'get',args: ['falseVar']},{operator: 'false',args: []}]}, data: {falseVar: false}, strict: false}, expected: true},
       {name: 400, args: {code: {operator: 'isundefined',args: ['unknownVariable']}, data: {}}, expected: true},
+      {name: 402, args: {code: {operator:"isundefined",args:[{operator:"get",args:["myvar"]}]}, data: {myvar: undefined}, strict: false}, expected: true},
+      {name: 500, args: {code: {operator:"lindex",args:[{operator:"get",args:["fruits"]},1]}, data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: 'banana'},
+      {name: 502, args: {code: {operator:"lindex",args:[{operator:"get",args:["fruits"]}]}, data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: undefined},
+      {name: 504, args: {code: {operator:"lrange",args:[{operator:"get",args:["fruits"]},0]}, data: {fruits: ['apple', 'banana', 'kiwi']}}, expected: ['apple', 'banana', 'kiwi']},
+      {name: 504, args: {code: {operator:"lrange",args:[{operator:"get",args:["fruits"]},1,4]}, data: {fruits: ['apple', 'banana', 'kiwi', 'orange', 'melon']}}, expected: ['banana', 'kiwi', 'orange']},
     ]
   },  
 ];
